@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44969684, g: 0.49976385, b: 0.5756377, a: 1}
+  m_IndirectSpecularColor: {r: 0.44969642, g: 0.4997629, b: 0.5756367, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2832,6 +2832,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4202616065142092, guid: 8c2c8efc46e05fc49a53c083e93222df, type: 3}
   m_PrefabInstance: {fileID: 396243217}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &398756427 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1893764439761525985, guid: 0c9f74458109f5d4e880a13233d5dd25, type: 3}
+  m_PrefabInstance: {fileID: 1898572390645727671}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &416334468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4003,6 +4008,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 549584745}
+  - component: {fileID: 549584746}
   m_Layer: 0
   m_Name: Scene
   m_TagString: Untagged
@@ -4027,6 +4033,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &549584746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549584744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa50084bfb92de41a5b4e70671f8395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &560074201
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10794,6 +10812,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4768104394026982, guid: 708f7c8e78242b146b2fda40bd750e69, type: 3}
   m_PrefabInstance: {fileID: 1602087081}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1607654046 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1894325296004027097, guid: 0c9f74458109f5d4e880a13233d5dd25, type: 3}
+  m_PrefabInstance: {fileID: 1898572390645727671}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1608096406
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13765,11 +13788,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 1373260180050808}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99836d75753dec348b369a757404a18c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WheelFL: {fileID: 0}
+  WheelFR: {fileID: 0}
+  WheelRL: {fileID: 0}
+  WheelRR: {fileID: 0}
+  WheelFLtrans: {fileID: 4790634791674642}
+  WheelFRtrans: {fileID: 4165395310682444}
+  WheelRLtrans: {fileID: 1607654046}
+  WheelRRtrans: {fileID: 398756427}
+  eulertest: {x: 0, y: 0, z: 0}
+  maxFwdSpeed: -3000
+  maxBwdSpeed: 1000
+  gravity: 9.8
+  braked: 0
+  maxBrakeTorque: 500
+  rb: {fileID: 0}
+  centreofmass: {fileID: 4980041601133638}
+  maxTorque: 1000
+--- !u!114 &1373260180050810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373260180050808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 713ba85d11bf451448aa50defc0939d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   wheelFrontRight: {fileID: 4165395310682444}
   wheelFrontLeft: {fileID: 4790634791674642}
+  maxRotationY: 45
 --- !u!4 &4165395310682444 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1898225324443443451, guid: 0c9f74458109f5d4e880a13233d5dd25, type: 3}
@@ -13835,6 +13888,10 @@ PrefabInstance:
     - target: {fileID: 1893944882177224177, guid: 0c9f74458109f5d4e880a13233d5dd25, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1898572391176542520, guid: 0c9f74458109f5d4e880a13233d5dd25, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1899457865500828113, guid: 0c9f74458109f5d4e880a13233d5dd25, type: 3}
       propertyPath: m_Name
