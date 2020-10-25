@@ -49,39 +49,53 @@ public class CarController : MonoBehaviour
     void Update()
     {
         // control x velocity
-        if (isTurningRight || isTurningLeft)
+        //if (isTurningRight || isTurningLeft)
+        //{
+        //    xVel = Mathf.Clamp(xVel + ((isTurningRight ? 1 : -1) * Time.deltaTime * LERP_TURN_WHEEL), -1.0f, 1.0f);
+        //}
+        //else if (xVel != 0)
+        //{
+        //    xVel = Mathf.Lerp(xVel, 0.0f, LERP_STRAIGHT_WHEEL);
+        //}
+
+        //// rotate wheels
+        //float rotateY = maxRotationY * xVel;
+        //var angle = wheelFrontRight.transform.eulerAngles;
+        //angle.y = rotateY;
+        //wheelFrontRight.transform.eulerAngles = angle;
+        //wheelFrontLeft.transform.eulerAngles = angle;
+
+        //// control z velocity
+        //if (isBrake || isPressGas)
+        //{
+        //    zVel = Mathf.Clamp(zVel + ((isPressGas ? 1 : -1) * Time.deltaTime * LERP_TURN_WHEEL), -1.0f, 1.0f);
+        //}
+        //else if (zVel != 0)
+        //{
+        //    zVel = Mathf.Lerp(zVel, 0.0f, LERP_STOP);
+        //}
+
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        if (vertical != 0)
         {
-            xVel = Mathf.Clamp(xVel + ((isTurningRight ? 1 : -1) * Time.deltaTime * LERP_TURN_WHEEL), -1.0f, 1.0f);
-        }
-        else if (xVel != 0)
-        {
-            xVel = Mathf.Lerp(xVel, 0.0f, LERP_STRAIGHT_WHEEL);
+            transform.Translate(Vector3.forward * vertical * Time.deltaTime * 5.0f);
+            transform.Rotate(Vector3.up, horizontal * 100.0f * Time.deltaTime);
         }
 
-        // rotate wheels
-        float rotateY = maxRotationY * xVel;
-        var angle = wheelFrontRight.transform.eulerAngles;
-        angle.y = rotateY;
-        wheelFrontRight.transform.eulerAngles = angle;
-        wheelFrontLeft.transform.eulerAngles = angle;
-
-        // control z velocity
-        if (isBrake || isPressGas)
-        {
-            zVel = Mathf.Clamp(zVel + ((isPressGas ? 1 : -1) * Time.deltaTime * LERP_TURN_WHEEL), -1.0f, 1.0f);
-        }
-        else if (zVel != 0)
-        {
-            zVel = Mathf.Lerp(zVel, 0.0f, LERP_STOP);
-        }
+        horizontal = Math.Abs(horizontal);
+        wheelFrontRight.transform.Rotate(Vector3.up, horizontal * 100.0f * Time.deltaTime);
+        wheelFrontLeft.transform.Rotate(Vector3.up, horizontal * 100.0f * Time.deltaTime);
 
         // update position
         if (zVel != 0)
         {
-            var pos = transform.position;
-            pos.x += xVel * 0.01f;
-            pos.z += zVel * 0.01f;
-            transform.position = pos;
+            
+
+            //var pos = transform.position;
+            //pos.x += xVel * 0.01f;
+            //pos.z += zVel * 0.01f;
+            //transform.position = pos;
         }
     }
 
