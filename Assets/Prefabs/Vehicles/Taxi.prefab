@@ -302,7 +302,7 @@ MonoBehaviour:
   rearDriverT: {fileID: 1894325296004027097}
   rearPassengerT: {fileID: 1893764439761525985}
   maxSteerAngle: 30
-  motorForce: 300
+  motorForce: 100
 --- !u!1 &1899959159135432063
 GameObject:
   m_ObjectHideFlags: 0
