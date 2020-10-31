@@ -95,6 +95,36 @@ Transform:
   m_Father: {fileID: 5692703931814473942}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1743519879102407310
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 825567450030636292}
+  m_Layer: 0
+  m_Name: CamPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &825567450030636292
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743519879102407310}
+  m_LocalRotation: {x: -0, y: 0.99666053, z: -0.081657074, w: 0}
+  m_LocalPosition: {x: -0.00000002883764, y: 0.638, z: -0.324}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5692703931814473942}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 9.368, y: 180, z: 0}
 --- !u!1 &1873412996187625662
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +260,7 @@ GameObject:
   - component: {fileID: 5711278431941254686}
   - component: {fileID: 5754644566694425475}
   - component: {fileID: 3939271323443872127}
-  - component: {fileID: 9206354801638596913}
+  - component: {fileID: 6606683127335449655}
   m_Layer: 0
   m_Name: Truck
   m_TagString: Untagged
@@ -254,6 +284,7 @@ Transform:
   - {fileID: 5692558696188512900}
   - {fileID: 5692929683797376936}
   - {fileID: 7361830047592622569}
+  - {fileID: 825567450030636292}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -320,7 +351,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!65 &3939271323443872127
 BoxCollider:
@@ -333,9 +364,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.3460419, y: 0.3702461, z: 1.3739443}
+  m_Size: {x: 0.75, y: 0.3702461, z: 1.3739443}
   m_Center: {x: -0.00000011920929, y: 0.22799435, z: 0.006925106}
---- !u!114 &9206354801638596913
+--- !u!114 &6606683127335449655
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -344,7 +375,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5697820197918371496}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c54556480f9744585c8b9ee62f1f02, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b8d7285541df9c4daa734219d43b580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   frontDriverW: {fileID: 859102747396808585}
@@ -356,7 +387,7 @@ MonoBehaviour:
   rearDriverT: {fileID: 5692558696188512900}
   rearPassengerT: {fileID: 5692929683797376936}
   maxSteerAngle: 30
-  motorForce: 100
+  motorForce: 50
 --- !u!1 &5698681465192802672
 GameObject:
   m_ObjectHideFlags: 0
