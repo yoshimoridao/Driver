@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LoopMap : MonoBehaviour
+public class MapMgr : MonoBehaviour
 {
+    public static MapMgr Instance;
     public Transform playerCarT;
     public float spawnDistance = 10.0f;
     public float destroyDistance = 100.0f;
@@ -11,6 +12,11 @@ public class LoopMap : MonoBehaviour
     [SerializeField] GameObject prefGround;
     private Transform nearLimitPntT;
     private Transform farLimitPntT;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -48,5 +54,10 @@ public class LoopMap : MonoBehaviour
         nextGround.position = genPos;
 
         this.farLimitPntT = nextGround.GetChild(nextGround.childCount - 1);
+    }
+
+    public Transform GetLastGround()
+    {
+        return transform.GetChild(transform.childCount - 1);
     }
 }

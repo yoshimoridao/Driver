@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 1876797835325963847}
   - component: {fileID: 1749999385513457648}
   - component: {fileID: 7565888966685520243}
-  - component: {fileID: 2661061350184378136}
+  - component: {fileID: 9020929460260286336}
   m_Layer: 0
   m_Name: Taxi
   m_TagString: Untagged
@@ -199,7 +199,6 @@ Transform:
   - {fileID: 1894325296004027097}
   - {fileID: 1893764439761525985}
   - {fileID: 3558851795903478425}
-  - {fileID: 3733131776080522073}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -266,7 +265,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 8
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!65 &7565888966685520243
 BoxCollider:
@@ -279,9 +278,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.65, y: 0.3702461, z: 1.3739443}
-  m_Center: {x: -0.00000011920929, y: 0.22799435, z: 0.006925106}
---- !u!114 &2661061350184378136
+  m_Size: {x: 0.65, y: 0.3424248, z: 1.3739443}
+  m_Center: {x: -0.00000011920929, y: 0.2140837, z: 0.006925106}
+--- !u!114 &9020929460260286336
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -290,7 +289,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1899944542320906959}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c54556480f9744585c8b9ee62f1f02, type: 3}
+  m_Script: {fileID: 11500000, guid: 496be260f78538449914a58404c86430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   frontDriverW: {fileID: 2085694513244455090}
@@ -302,7 +301,8 @@ MonoBehaviour:
   rearDriverT: {fileID: 1894325296004027097}
   rearPassengerT: {fileID: 1893764439761525985}
   maxSteerAngle: 30
-  motorForce: 80
+  motorForce: 70
+  laneNode: {fileID: 0}
 --- !u!1 &1899959159135432063
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,36 +526,6 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_Enabled: 1
---- !u!1 &5122957278572051971
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3733131776080522073}
-  m_Layer: 0
-  m_Name: Sensor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3733131776080522073
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5122957278572051971}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.35, z: 0.47}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1893944882177224177}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5872763317194869348
 GameObject:
   m_ObjectHideFlags: 0

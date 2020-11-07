@@ -15,15 +15,21 @@ public class SimpleCarController : MonoBehaviour
     public float maxSteerAngle = 30;
     public float motorForce = 50;
 
-    private void Start()
+    [SerializeField] protected Transform laneNode;
+
+    protected virtual void Start()
     {
-        m_horizontalInput = 0.0f;
-        m_verticalInput = 1.0f;
     }
 
-	private void Steer()
+	protected virtual void Steer()
 	{
-		m_steeringAngle = maxSteerAngle * m_horizontalInput;
+        if (laneNode)
+        {
+            var lanePos = laneNode.position;
+            var relativeVector = transform.InverseTransformPoint(transform.position.x + 3.0f, lanePos.y, lanePos.z);
+            m_horizontalInput = (relativeVector.x / relativeVector.magnitude);
+        }
+        m_steeringAngle = maxSteerAngle * m_horizontalInput;
 		frontDriverW.steerAngle = m_steeringAngle;
 		frontPassengerW.steerAngle = m_steeringAngle;
 	}
@@ -52,6 +58,11 @@ public class SimpleCarController : MonoBehaviour
 		_transform.position = _pos;
 		_transform.rotation = _quat;
 	}
+
+    public void SetLane(Transform t)
+    {
+        laneNode = t;
+    }
 
 	private void FixedUpdate()
 	{
