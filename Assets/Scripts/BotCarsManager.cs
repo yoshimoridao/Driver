@@ -15,6 +15,7 @@ public class BotCarsManager : MonoBehaviour
 
     private const int MIN_SPAWN_CAR = 3;
     private const float DELAY_SPAWN_NEXT_CAR = 7.0f;
+    private Vector2 RANGE_EULER_Y = new Vector2(-60.0f, 60.0f);
 
     private List<BotCarController> spawnCars = new List<BotCarController>();
     private float spawnTime;
@@ -72,7 +73,7 @@ public class BotCarsManager : MonoBehaviour
         genCar.transform.position = spawnPos;
 
         // random rotation y
-        genCar.transform.eulerAngles = new Vector3(0.0f, Random.Range(0, 360.0f), 0.0f);
+        genCar.transform.eulerAngles = new Vector3(0.0f, Random.Range(RANGE_EULER_Y.x, RANGE_EULER_Y.y), 0.0f);
 
         spawnCars.Add(genCar);
     }

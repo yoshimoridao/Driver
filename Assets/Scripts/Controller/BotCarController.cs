@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class BotCarController : SimpleCarController
 {
+    public enum MvmState { WaitPlayer, Chase };
+    public enum CarState { Well = 0, Damage, Serious, Critical };
+
     private const float DISTANCE_CHASE = 5.0f;
-    public enum CarState { WaitPlayer, Chase };
-    private CarState carState = CarState.WaitPlayer;
+    private MvmState mvmState = MvmState.WaitPlayer;
+    private CarState carState = CarState.Well;
+
+    [SerializeField] List<Material> carMaterials = new List<Material>();
+    MeshRenderer meshRd;
 
     protected override void Start()
     {
+        meshRd = GetComponent<MeshRenderer>();
+
         base.Start();
         this.m_horizontalInput = 0.0f;
         this.m_verticalInput = 0.0f;
@@ -17,12 +25,12 @@ public class BotCarController : SimpleCarController
 
     void Update()
     {
-        if (carState == CarState.WaitPlayer)
+        if (mvmState == MvmState.WaitPlayer)
         {
             var playerCar = BotCarsManager.Instance.GetPlayerCar();
             if (playerCar.transform.position.x - transform.position.x >= DISTANCE_CHASE)
             {
-                carState = CarState.Chase;
+                mvmState = MvmState.Chase;
                 m_verticalInput = 1.0f;
             }
         }
@@ -30,7 +38,7 @@ public class BotCarController : SimpleCarController
 
     protected override void Steer()
     {
-        if (laneNode && carState == CarState.Chase)
+        if (laneNode && mvmState == MvmState.Chase)
         {
             var lanePos = laneNode.position;
             var relativeVector = transform.InverseTransformPoint(transform.position.x + 3.0f, lanePos.y, lanePos.z);
@@ -38,5 +46,46 @@ public class BotCarController : SimpleCarController
         }
 
         base.Steer();
+    }
+
+    private void OnCollisionEnter(Collision col)
+    {
+        var fruit = col.gameObject.GetComponent<Fruit>();
+        if (fruit)
+        {
+            fruit.OnCollide();
+            OnDamage();
+        }
+    }
+    public void OnDamage()
+    {
+        var curState = carState;
+        
+        switch (curState)
+        {
+            case CarState.Well:
+                curState = CarState.Damage;
+                break;
+            case CarState.Damage:
+                curState = CarState.Serious;
+                break;
+            case CarState.Serious:
+                curState = CarState.Critical;
+                break;
+            case CarState.Critical:
+                break;
+            default:
+                break;
+        }
+
+        if (curState != carState)
+        {
+            carState = curState;
+            int id = (int)carState - 1;
+            if (id >= 0 && id < carMaterials.Count)
+            {
+                meshRd.material = carMaterials[id];
+            }
+        }
     }
 }
