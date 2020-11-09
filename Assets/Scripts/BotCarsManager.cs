@@ -50,7 +50,7 @@ public class BotCarsManager : MonoBehaviour
 
         if (spawnTime <= 0.0f && spawnCars.Count < MIN_SPAWN_CAR)
         {
-            var lastGround = MapMgr.Instance.GetLastGround();
+            var lastGround = MapMgr.Instance.GetLastProperty();
             if (lastGround.position.x >= playerCar.transform.position.x)
             {
                 spawnTime = DELAY_SPAWN_NEXT_CAR;
@@ -67,9 +67,8 @@ public class BotCarsManager : MonoBehaviour
         genCar.SetLane(lane2T);     // default = mid lane
 
         // random position
-        var lastGround = MapMgr.Instance.GetLastGround();
         var spawnPos = spawnCarTrans[Random.Range(0, spawnCarTrans.Count)].position;
-        spawnPos.x = Random.Range(playerCar.transform.position.x, lastGround.position.x);
+        spawnPos.x = MapMgr.Instance.GetRandomPolicePosition().x;
         genCar.transform.position = spawnPos;
 
         // random rotation y

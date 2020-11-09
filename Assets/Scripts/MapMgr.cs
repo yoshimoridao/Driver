@@ -9,9 +9,10 @@ public class MapMgr : MonoBehaviour
     public float spawnDistance = 10.0f;
     public float destroyDistance = 100.0f;
 
-    [SerializeField] GameObject prefGround;
+    [SerializeField] List<GameObject> prefProps = new List<GameObject>();
     private Transform nearLimitPntT;
     private Transform farLimitPntT;
+    List<PropertyMap> propertyMaps = new List<PropertyMap>();
 
     private void Awake()
     {
@@ -22,11 +23,16 @@ public class MapMgr : MonoBehaviour
     {
         if (transform.childCount > 0)
         {
-            var nearGround = transform.GetChild(0);
-            nearLimitPntT = nearGround.GetChild(0);
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                var prop = transform.GetChild(i);
+                if (i == 0)
+                    nearLimitPntT = prop.GetChild(0);
+                if (i == transform.childCount - 1)
+                    farLimitPntT = prop.GetChild(prop.childCount - 1);
 
-            var farGround = transform.GetChild(transform.childCount - 1);
-            farLimitPntT = farGround.GetChild(farGround.childCount - 1);
+                propertyMaps.Add(prop.GetComponent<PropertyMap>());
+            }
         }
     }
 
@@ -34,7 +40,7 @@ public class MapMgr : MonoBehaviour
     {
         if (farLimitPntT && Mathf.Abs(farLimitPntT.position.x - playerCarT.position.x) <= spawnDistance)
         {
-            GenerateNextGround();
+            GenerateNextProperties();
         }
         // destroy first ground
         if (nearLimitPntT && Mathf.Abs(playerCarT.position.x - nearLimitPntT.position.x) >= destroyDistance)
@@ -45,19 +51,29 @@ public class MapMgr : MonoBehaviour
             nearLimitPntT = transform.GetChild(0);
     }
 
-    private void GenerateNextGround()
+    private void GenerateNextProperties()
     {
-        var nextGround = Instantiate(prefGround, transform).transform;
-        float offsetX = nextGround.position.x - nextGround.GetChild(0).position.x;
+        var prop = prefProps[Random.Range(0, prefProps.Count)];
+        var nextProp = Instantiate(prop, transform).GetComponent<PropertyMap>();
+        var nextPropT = nextProp.transform;
+        float offsetX = nextPropT.position.x - nextPropT.GetChild(0).position.x;
         var genPos = farLimitPntT.position;
         genPos.x += offsetX;
-        nextGround.position = genPos;
+        nextPropT.position = genPos;
 
-        this.farLimitPntT = nextGround.GetChild(nextGround.childCount - 1);
+        this.farLimitPntT = nextPropT.GetChild(nextPropT.childCount - 1);
+
+        propertyMaps.Add(nextProp);
     }
 
-    public Transform GetLastGround()
+    public Transform GetLastProperty()
     {
         return transform.GetChild(transform.childCount - 1);
+    }
+
+    public Vector3 GetRandomPolicePosition()
+    {
+        // get last property
+        return propertyMaps[propertyMaps.Count - 1].GetRandomPolicePosition();
     }
 }
