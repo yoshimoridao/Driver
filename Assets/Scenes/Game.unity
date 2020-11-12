@@ -10395,6 +10395,22 @@ PrefabInstance:
       propertyPath: zField
       value: 
       objectReference: {fileID: 1925910646}
+    - target: {fileID: 4019824759511177103, guid: a51f1adddcd6fcd4b84828494c9923e1, type: 3}
+      propertyPath: prefFruits.Array.data[0]
+      value: 
+      objectReference: {fileID: 1304660386900934, guid: d6fa16ca018adfa49b5447169992efea, type: 3}
+    - target: {fileID: 4019824759511177103, guid: a51f1adddcd6fcd4b84828494c9923e1, type: 3}
+      propertyPath: throwForceZ
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019824759511177103, guid: a51f1adddcd6fcd4b84828494c9923e1, type: 3}
+      propertyPath: throwForceXY
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019824759511177103, guid: a51f1adddcd6fcd4b84828494c9923e1, type: 3}
+      propertyPath: prefFruits.Array.data[1]
+      value: 
+      objectReference: {fileID: 1366551059062300, guid: 346147b8b64009343a4122583f7266e5, type: 3}
     - target: {fileID: 5692703931814473942, guid: a51f1adddcd6fcd4b84828494c9923e1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -18.42

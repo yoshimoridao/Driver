@@ -8,12 +8,14 @@ public class ThrowFruit : MonoBehaviour
     Vector2 startPos, endPos, vel; // touch start position, touch end position, swipe direction
     float touchTimeStart, touchTimeFinish, timeInterval; // to calculate swipe time to control throw force in Z direction
 
-    [SerializeField] List<GameObject> prefFruits;
+    [SerializeField] List<GameObject> prefFruits = new List<GameObject>();
     [SerializeField] Transform projectileT;
     [SerializeField] float reloadTime = 0.5f;
     [SerializeField] float destroyTime = 5.0f;
-    [SerializeField] float throwForceInXandY = 1f; // to control throw force in X and Y directions
-    [SerializeField] float throwForceInZ = 50f; // to control throw force in Z direction
+    [SerializeField] float throwForceXY = 0.5f; // to control throw force in X and Y directions
+    [SerializeField] float throwForceZ = 1.0f; // to control throw force in Z direction
+    [SerializeField] float scaleTorqueXY = 2.0f; // to control throw force in Z direction
+    [SerializeField] float scaleTorqueZ = 100.0f; // to control throw force in Z direction
 
     [SerializeField] TMP_InputField xyField;
     [SerializeField] TMP_InputField zField;
@@ -23,17 +25,17 @@ public class ThrowFruit : MonoBehaviour
 
     public void SetThrowXY()
     {
-        throwForceInXandY = float.Parse(xyField.text);
+        throwForceXY = float.Parse(xyField.text);
     }
     public void SetThrowZ()
     {
-        throwForceInZ = float.Parse(zField.text);
+        throwForceZ = float.Parse(zField.text);
     }
 
     void Start()
     {
-        xyField.text = throwForceInXandY.ToString();
-        zField.text = throwForceInZ.ToString();
+        xyField.text = throwForceXY.ToString();
+        zField.text = throwForceZ.ToString();
     }
 
     // Update is called once per frame
@@ -64,33 +66,33 @@ public class ThrowFruit : MonoBehaviour
         }
     }
 
-    void InputTouch()
-    {
-        // if you touch the screen
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-        {
-            // getting touch position and marking time when you touch the screen
-            touchTimeStart = Time.time;
-            startPos = Input.GetTouch(0).position;
-        }
+    //void InputTouch()
+    //{
+    //    // if you touch the screen
+    //    if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+    //    {
+    //        // getting touch position and marking time when you touch the screen
+    //        touchTimeStart = Time.time;
+    //        startPos = Input.GetTouch(0).position;
+    //    }
 
-        // if you release your finger
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
-        {
-            touchTimeFinish = Time.time;
-            timeInterval = touchTimeFinish - touchTimeStart;
+    //    // if you release your finger
+    //    if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+    //    {
+    //        touchTimeFinish = Time.time;
+    //        timeInterval = touchTimeFinish - touchTimeStart;
 
-            endPos = Input.GetTouch(0).position;
-            vel = startPos - endPos;
+    //        endPos = Input.GetTouch(0).position;
+    //        vel = startPos - endPos;
 
-            // add force to balls rigidbody in 3D space depending on swipe time, direction and throw forces
-            rbFruit.isKinematic = false;
-            rbFruit.AddForce(-vel.x * throwForceInXandY, -vel.y * throwForceInXandY, throwForceInZ / timeInterval);
+    //        // add force to balls rigidbody in 3D space depending on swipe time, direction and throw forces
+    //        rbFruit.isKinematic = false;
+    //        rbFruit.AddForce(-vel.x * throwForceInXandY, -vel.y * throwForceInXandY, throwForceInZ / timeInterval);
 
-            Destroy(rbFruit.gameObject, destroyTime);
-            rbFruit = null;
-        }
-    }
+    //        Destroy(rbFruit.gameObject, destroyTime);
+    //        rbFruit = null;
+    //    }
+    //}
 
     void InputPC()
     {
@@ -116,7 +118,8 @@ public class ThrowFruit : MonoBehaviour
 
             // add force to balls rigidbody in 3D space depending on swipe time, direction and throw forces
             rbFruit.isKinematic = false;
-            rbFruit.AddForce(-(vel.magnitude * throwForceInZ), -vel.y * throwForceInXandY, -vel.x * throwForceInXandY);  // note: revert x - z
+            rbFruit.AddForce(-(vel.magnitude * throwForceZ), -vel.y * throwForceXY, -vel.x * throwForceXY);  // note: revert x - z
+            rbFruit.AddTorque(vel.x * scaleTorqueXY, vel.y * scaleTorqueXY, vel.magnitude * scaleTorqueZ);
 
             Destroy(rbFruit.gameObject, destroyTime);
             rbFruit = null;
@@ -125,7 +128,7 @@ public class ThrowFruit : MonoBehaviour
 
     void SpawnFruits()
     {
-        var newFruit = Instantiate(prefFruits[0], transform);
+        var newFruit = Instantiate(prefFruits[Random.Range(0, prefFruits.Count)], transform);
         newFruit.transform.position = projectileT.position;
         rbFruit = newFruit.GetComponent<Rigidbody>();
     }

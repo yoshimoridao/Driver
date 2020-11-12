@@ -435,11 +435,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefFruits:
   - {fileID: 700999549228410983, guid: 2458dfa462cc90a42b8e1627cdb59204, type: 3}
+  - {fileID: 1304660386900934, guid: d6fa16ca018adfa49b5447169992efea, type: 3}
   projectileT: {fileID: 7559462226424445744}
   reloadTime: 0.5
   destroyTime: 5
-  throwForceInXandY: 1
-  throwForceInZ: 50
+  throwForceXY: 0.5
+  throwForceZ: 1
+  scaleTorqueXY: 2
+  scaleTorqueZ: 100
   xyField: {fileID: 0}
   zField: {fileID: 0}
 --- !u!1 &5698681465192802672
