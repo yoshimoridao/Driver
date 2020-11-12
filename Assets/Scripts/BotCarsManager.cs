@@ -14,7 +14,7 @@ public class BotCarsManager : MonoBehaviour
     [SerializeField] List<Transform> spawnCarTrans = new List<Transform>();
 
     private const int MIN_SPAWN_CAR = 1;
-    private const float DELAY_SPAWN_NEXT_CAR = 10.0f;
+    private const float DELAY_SPAWN_NEXT_CAR = 7.0f;
     private Vector2 RANGE_EULER_Y = new Vector2(-60.0f, 60.0f);
 
     private List<BotCarController> spawnCars = new List<BotCarController>();
@@ -75,5 +75,12 @@ public class BotCarsManager : MonoBehaviour
         genCar.transform.eulerAngles = new Vector3(0.0f, Random.Range(RANGE_EULER_Y.x, RANGE_EULER_Y.y), 0.0f);
 
         spawnCars.Add(genCar);
+    }
+
+    public void RemoveSpawnCar(GameObject car)
+    {
+        int id = spawnCars.FindIndex(x => x.gameObject == car.gameObject);
+        if (id != -1)
+            spawnCars.RemoveAt(id);
     }
 }

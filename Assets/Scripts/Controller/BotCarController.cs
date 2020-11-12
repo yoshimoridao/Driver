@@ -73,6 +73,7 @@ public class BotCarController : SimpleCarController
             case CarState.Serious:
                 curState = CarState.Critical;
                 m_verticalInput = 0.0f;
+                BotCarsManager.Instance.RemoveSpawnCar(gameObject);
                 break;
             case CarState.Critical:
                 break;
