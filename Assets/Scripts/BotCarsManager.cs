@@ -13,8 +13,8 @@ public class BotCarsManager : MonoBehaviour
     [SerializeField] List<GameObject> carPrefs = new List<GameObject>();
     [SerializeField] List<Transform> spawnCarTrans = new List<Transform>();
 
-    private const int MIN_SPAWN_CAR = 3;
-    private const float DELAY_SPAWN_NEXT_CAR = 7.0f;
+    private const int MIN_SPAWN_CAR = 1;
+    private const float DELAY_SPAWN_NEXT_CAR = 10.0f;
     private Vector2 RANGE_EULER_Y = new Vector2(-60.0f, 60.0f);
 
     private List<BotCarController> spawnCars = new List<BotCarController>();

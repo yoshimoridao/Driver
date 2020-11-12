@@ -8,6 +8,7 @@ public class BotCarController : SimpleCarController
     public enum CarState { Well = 0, Damage, Serious, Critical };
 
     private const float DISTANCE_CHASE = 5.0f;
+
     private MvmState mvmState = MvmState.WaitPlayer;
     private CarState carState = CarState.Well;
 
@@ -51,7 +52,7 @@ public class BotCarController : SimpleCarController
     private void OnCollisionEnter(Collision col)
     {
         var fruit = col.gameObject.GetComponent<Fruit>();
-        if (fruit)
+        if (fruit && !fruit.IsCollided())
         {
             fruit.OnCollide();
             OnDamage();
@@ -71,6 +72,7 @@ public class BotCarController : SimpleCarController
                 break;
             case CarState.Serious:
                 curState = CarState.Critical;
+                m_verticalInput = 0.0f;
                 break;
             case CarState.Critical:
                 break;

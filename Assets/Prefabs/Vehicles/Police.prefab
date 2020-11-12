@@ -566,7 +566,7 @@ MonoBehaviour:
   rearDriverT: {fileID: 2944971323282699613}
   rearPassengerT: {fileID: 2936620945531060583}
   maxSteerAngle: 30
-  motorForce: 70
+  motorForce: 80
   laneNode: {fileID: 0}
   carMaterials:
   - {fileID: 2100000, guid: 58c878d5734fbe04abe786ad5ee91e5a, type: 2}
