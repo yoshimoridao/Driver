@@ -10,8 +10,7 @@ public class ThrowFruit : MonoBehaviour
 
     [SerializeField] List<GameObject> prefFruits = new List<GameObject>();
     [SerializeField] Transform projectileT;
-    [SerializeField] float reloadTime = 0.5f;
-    [SerializeField] float destroyTime = 5.0f;
+    [SerializeField] float reloadTime = 0.01f;
     [SerializeField] float throwForceXY = 0.5f; // to control throw force in X and Y directions
     [SerializeField] float throwForceZ = 1.0f; // to control throw force in Z direction
     [SerializeField] float scaleTorqueXY = 2.0f; // to control throw force in Z direction
@@ -20,7 +19,7 @@ public class ThrowFruit : MonoBehaviour
     [SerializeField] TMP_InputField xyField;
     [SerializeField] TMP_InputField zField;
 
-    Rigidbody rbFruit;
+    Fruit fruit;
     float spawnTime;
 
     public void SetThrowXY()
@@ -41,7 +40,7 @@ public class ThrowFruit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rbFruit)
+        if (fruit)
         {
             InputPC();
         }
@@ -96,7 +95,7 @@ public class ThrowFruit : MonoBehaviour
 
     void InputPC()
     {
-        if (rbFruit == null)
+        if (fruit == null)
             return;
 
         // if you touch the screen
@@ -116,13 +115,10 @@ public class ThrowFruit : MonoBehaviour
             endPos = Input.mousePosition;
             vel = startPos - endPos;
 
-            // add force to balls rigidbody in 3D space depending on swipe time, direction and throw forces
-            rbFruit.isKinematic = false;
-            rbFruit.AddForce(-(vel.magnitude * throwForceZ), -vel.y * throwForceXY, -vel.x * throwForceXY);  // note: revert x - z
-            rbFruit.AddTorque(vel.x * scaleTorqueXY, vel.y * scaleTorqueXY, vel.magnitude * scaleTorqueZ);
-
-            Destroy(rbFruit.gameObject, destroyTime);
-            rbFruit = null;
+            // add force to balls rigidbody in 3D space depending on swipe time, direction and throw forces1
+            var force = new Vector3(-(vel.magnitude * throwForceZ), -vel.y * throwForceXY, -vel.x * throwForceXY);  // note: revert x - z
+            var torque = new Vector3(vel.x * scaleTorqueXY, vel.y * scaleTorqueXY, vel.magnitude * scaleTorqueZ);
+            fruit.OnThrow(force, torque);
         }
     }
 
@@ -130,6 +126,6 @@ public class ThrowFruit : MonoBehaviour
     {
         var newFruit = Instantiate(prefFruits[Random.Range(0, prefFruits.Count)], transform);
         newFruit.transform.position = projectileT.position;
-        rbFruit = newFruit.GetComponent<Rigidbody>();
+        fruit = newFruit.GetComponent<Fruit>();
     }
 }

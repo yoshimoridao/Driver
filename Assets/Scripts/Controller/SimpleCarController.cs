@@ -34,7 +34,7 @@ public class SimpleCarController : MonoBehaviour
 		frontPassengerW.steerAngle = m_steeringAngle;
 	}
 
-	private void Accelerate()
+	protected virtual void Accelerate()
 	{
         rearDriverW.motorTorque = m_verticalInput * motorForce;
         rearPassengerW.motorTorque = m_verticalInput * motorForce;
@@ -69,6 +69,6 @@ public class SimpleCarController : MonoBehaviour
         //GetInput();
         Steer();
         Accelerate();
-		UpdateWheelPoses();
-	}
+        UpdateWheelPoses();
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BotCarController : SimpleCarController
 {
@@ -12,6 +13,7 @@ public class BotCarController : SimpleCarController
     private MvmState mvmState = MvmState.WaitPlayer;
     private CarState carState = CarState.Well;
 
+    public Action<GameObject> actOnDestroyed;
     [SerializeField] List<Material> carMaterials = new List<Material>();
     MeshRenderer meshRd;
 
@@ -34,6 +36,15 @@ public class BotCarController : SimpleCarController
                 mvmState = MvmState.Chase;
                 m_verticalInput = 1.0f;
             }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (actOnDestroyed != null)
+        {
+            actOnDestroyed.Invoke(gameObject);
+            actOnDestroyed = null;
         }
     }
 
