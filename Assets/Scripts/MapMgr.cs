@@ -25,13 +25,14 @@ public class MapMgr : MonoBehaviour
         {
             for (int i = 0; i < transform.childCount; i++)
             {
-                var prop = transform.GetChild(i);
-                if (i == 0)
-                    nearLimitPntT = prop.GetChild(0);
-                if (i == transform.childCount - 1)
-                    farLimitPntT = prop.GetChild(prop.childCount - 1);
-
-                propertyMaps.Add(prop.GetComponent<PropertyMap>());
+                var prop = transform.GetChild(i).GetComponent<PropertyMap>();
+                if (prop)
+                    propertyMaps.Add(prop);
+            }
+            if (propertyMaps.Count > 0)
+            {
+                nearLimitPntT = propertyMaps[0].nearLimitPntT;
+                farLimitPntT = propertyMaps[propertyMaps.Count - 1].farLimitPntT;
             }
         }
     }
@@ -42,13 +43,17 @@ public class MapMgr : MonoBehaviour
         {
             GenerateNextProperties();
         }
-        // destroy first ground
-        if (nearLimitPntT && Mathf.Abs(playerCarT.position.x - nearLimitPntT.position.x) >= destroyDistance)
+        // remove farrest property
+        if (propertyMaps.Count > 0 && nearLimitPntT && Mathf.Abs(playerCarT.position.x - nearLimitPntT.position.x) >= destroyDistance)
         {
-            Destroy(transform.GetChild(0).gameObject);
+            var nearProp = propertyMaps[0];
+            Destroy(nearProp.gameObject);
+            propertyMaps.RemoveAt(0);
+
+            // update near limit pnt
+            nearProp = propertyMaps[0];
+            nearLimitPntT = nearProp.nearLimitPntT;
         }
-        if (nearLimitPntT == null && transform.childCount > 0)
-            nearLimitPntT = transform.GetChild(0);
     }
 
     private void GenerateNextProperties()
@@ -61,19 +66,28 @@ public class MapMgr : MonoBehaviour
         genPos.x += offsetX;
         nextPropT.position = genPos;
 
-        this.farLimitPntT = nextPropT.GetChild(nextPropT.childCount - 1);
+        this.farLimitPntT = nextProp.farLimitPntT;  // update far limit pnt
 
         propertyMaps.Add(nextProp);
     }
 
-    public Transform GetLastProperty()
+    public PropertyMap GetLastProperty()
     {
-        return transform.GetChild(transform.childCount - 1);
-    }
+        if (propertyMaps.Count > 0)
+            return propertyMaps[propertyMaps.Count - 1];
 
-    public Vector3 GetRandomPolicePosition()
+        return null;
+    }
+    public PropertyMap GetNextProperty(PropertyMap curProp)
     {
-        // get last property
-        return propertyMaps[propertyMaps.Count - 1].GetRandomPolicePosition();
+        int id = propertyMaps.FindIndex(x => x.gameObject == curProp.gameObject);
+        if (id != -1)
+        {
+            id++;
+            if (id < propertyMaps.Count)
+                return propertyMaps[id];
+        }
+
+        return GetLastProperty();
     }
 }

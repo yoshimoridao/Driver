@@ -15,17 +15,31 @@ public class SimpleCarController : MonoBehaviour
     public float maxSteerAngle = 30;
     public float motorForce = 50;
 
-    [SerializeField] protected Transform laneNode;
+    protected readonly Vector2 RANGE_EULER_Y = new Vector2(-60.0f, 60.0f);
+
+    [SerializeField]
+    protected PropertyMap curPropMap;
+    [SerializeField]
+    protected Transform curLane;
 
     protected virtual void Start()
     {
     }
 
+    protected virtual void Update()
+    {
+        if (curPropMap != null && transform.position.x >= curPropMap.farLimitPntT.position.x)
+        {
+            var nextPropMap = MapMgr.Instance.GetNextProperty(curPropMap);
+            SetCurPropertyMap(nextPropMap);
+        }
+    }
+
 	protected virtual void Steer()
 	{
-        if (laneNode)
+        if (curLane)
         {
-            var lanePos = laneNode.position;
+            var lanePos = curLane.position;
             var relativeVector = transform.InverseTransformPoint(transform.position.x + 3.0f, lanePos.y, lanePos.z);
             m_horizontalInput = (relativeVector.x / relativeVector.magnitude);
         }
@@ -59,12 +73,14 @@ public class SimpleCarController : MonoBehaviour
 		_transform.rotation = _quat;
 	}
 
-    public void SetLane(Transform t)
+    public virtual void SetCurPropertyMap(PropertyMap propMap)
     {
-        laneNode = t;
+        curPropMap = propMap;
+        // set default lane = mid lane
+        curLane = curPropMap.GetLanePosition(PropertyMap.LaneId.middle);
     }
 
-	private void FixedUpdate()
+    private void FixedUpdate()
 	{
         //GetInput();
         Steer();

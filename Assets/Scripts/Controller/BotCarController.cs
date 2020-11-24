@@ -26,8 +26,10 @@ public class BotCarController : SimpleCarController
         this.m_verticalInput = 0.0f;
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (mvmState == MvmState.WaitPlayer)
         {
             var playerCar = BotCarsManager.Instance.GetPlayerCar();
@@ -48,11 +50,21 @@ public class BotCarController : SimpleCarController
         }
     }
 
+    public void OnSpawn(PropertyMap propMap)
+    {
+        base.SetCurPropertyMap(propMap);
+
+        // random position
+        transform.position = curPropMap.GetRandomPolicePosition();
+        // random rotation y
+        transform.eulerAngles = new Vector3(0.0f, UnityEngine.Random.Range(RANGE_EULER_Y.x, RANGE_EULER_Y.y), 0.0f);
+    }
+
     protected override void Steer()
     {
-        if (laneNode && mvmState == MvmState.Chase)
+        if (curLane && mvmState == MvmState.Chase)
         {
-            var lanePos = laneNode.position;
+            var lanePos = curLane.position;
             var relativeVector = transform.InverseTransformPoint(transform.position.x + 3.0f, lanePos.y, lanePos.z);
             m_horizontalInput = (relativeVector.x / relativeVector.magnitude);
         }

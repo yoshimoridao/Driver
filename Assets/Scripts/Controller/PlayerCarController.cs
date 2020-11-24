@@ -13,8 +13,10 @@ public class PlayerCarController : SimpleCarController
         this.m_verticalInput = 1.0f;
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (m_verticalInput != 1.0f)
         {
             m_verticalInput = Mathf.Lerp(m_verticalInput, 1.0f, 0.1f);
@@ -22,6 +24,14 @@ public class PlayerCarController : SimpleCarController
             {
                 m_verticalInput = 1.0f;
             }
+        }
+
+        // set current property map
+        if (curPropMap == null)
+        {
+            var lastProp = MapMgr.Instance.GetLastProperty();
+            if (lastProp != null)
+                SetCurPropertyMap(lastProp);
         }
     }
 
@@ -32,9 +42,9 @@ public class PlayerCarController : SimpleCarController
 
     protected override void Steer()
     {
-        if (laneNode)
+        if (curLane)
         {
-            var lanePos = laneNode.position;
+            var lanePos = curLane.position;
             var relativeVector = transform.InverseTransformPoint(transform.position.x + 3.0f, lanePos.y, lanePos.z);
             m_horizontalInput = (relativeVector.x / relativeVector.magnitude);
         }
